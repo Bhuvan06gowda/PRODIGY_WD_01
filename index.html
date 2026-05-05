@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gilded Bean | Premium Coffee & Roastery</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --espresso: #2C1B18;
+            --cream: #F5F1ED;
+            --gold: #C6A664;
+            --white: #ffffff;
+            --dark-cream: #EAE3DB;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--espresso);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 8%;
+            z-index: 2000;
+            transition: var(--transition);
+            background-color: transparent;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 8%;
+            background-color: var(--espresso);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        /* Nav Hover Effect */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Mobile Hamburger */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background-color: var(--white);
+            transition: var(--transition);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2070') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* --- MENU SECTION --- */
+        .section-padding { padding: 100px 10%; }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-bottom: 3px solid transparent;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .menu-item h3 { font-family: 'Playfair Display', serif; margin-bottom: 5px; }
+        .menu-item p { font-size: 0.85rem; color: #666; }
+        .price { font-weight: bold; color: var(--gold); font-size: 1.2rem; }
+
+        /* --- CONTACT & FEEDBACK --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            background: var(--espresso);
+            color: var(--cream);
+            padding: 80px;
+            border-radius: 20px;
+        }
+
+        .contact-box h3, .feedback-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--gold);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--white);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus { border-color: var(--gold); }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--espresso);
+            padding: 15px 40px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .btn-gold:hover { background: var(--white); }
+
+        .testimonial {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 2px solid var(--gold);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .contact-container { grid-template-columns: 1fr; padding: 40px; }
+            .hero-content h1 { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100vh;
+                width: 80%;
+                background-color: var(--espresso);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.5s;
+            }
+            .nav-links.active { right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">GILDED BEAN</a>
+        
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#contact">Feedback</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <p>Est. 2026</p>
+            <h1>Brewed to Perfection</h1>
+            <button class="btn-gold" style="margin-top: 20px;">Explore Menu</button>
+        </div>
+    </header>
+
+    <!-- MENU SECTION -->
+    <section class="section-padding" id="menu">
+        <div class="section-title">
+            <h2>The Menu</h2>
+            <p>Freshly roasted beans delivered daily.</p>
+        </div>
+        
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div>
+                    <h3>Espresso Romano</h3>
+                    <p>A classic shot served with a twist of lemon.</p>
+                </div>
+                <span class="price">$3.50</span>
+            </div>
+            <div class="menu-item">
+                <div>
+                    <h3>Lavender Latte</h3>
+                    <p>Floral notes mixed with creamy oat milk.</p>
+                </div>
+                <span class="price">$5.50</span>
+            </div>
+            <div class="menu-item">
+                <div>
+                    <h3>Bourbon Cold Brew</h3>
+                    <p>Non-alcoholic, oak-aged flavor profiles.</p>
+                </div>
+                <span class="price">$6.00</span>
+            </div>
+            <div class="menu-item">
+                <div>
+                    <h3>Golden Turmeric Latte</h3>
+                    <p>Warm spices with honey and steamed milk.</p>
+                </div>
+                <span class="price">$5.00</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & FEEDBACK SECTION -->
+    <section class="section-padding" id="contact" style="background-color: var(--dark-cream);">
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <div class="contact-box">
+                <h3>Get In Touch</h3>
+                <form onsubmit="event.preventDefault(); alert('Message Sent!');">
+                    <div class="form-group">
+                        <input type="text" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" placeholder="Your Message..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-gold">Submit Now</button>
+                </form>
+            </div>
+
+            <!-- Feedback Area -->
+            <div class="feedback-box">
+                <h3>Guest Notes</h3>
+                <div class="testimonial">
+                    <p>"The Lavender Latte is a masterpiece. Best atmosphere for morning work."</p>
+                    <small style="color: var(--gold)">— Sofia K.</small>
+                </div>
+                <div class="testimonial">
+                    <p>"Finally, a place that understands the art of the pour-over!"</p>
+                    <small style="color: var(--gold)">— Marcus V.</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const navbar = document.getElementById('navbar');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        // 1. Navbar Scroll Interaction
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Mobile Menu Logic
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Hamburger Animation
+            const spans = hamburger.querySelectorAll('span');
+            if (navLinks.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // 3. Smooth Close on Link Click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
